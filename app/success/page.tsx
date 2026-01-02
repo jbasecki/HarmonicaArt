@@ -1,35 +1,47 @@
+"use client";
+
 import React from 'react';
 
-export default function LandingPage() {
+export default function SuccessPage() {
+  const message = "The oceanic breath of the sanctuary"; 
+  const words = message.split(" ");
+
   return (
-    <main className="relative min-h-screen w-full flex items-center justify-center p-6 overflow-hidden bg-black text-white">
-      {/* Background Video Layer */}
+    <main className="relative min-h-screen w-full flex flex-col justify-between p-10 bg-black overflow-hidden">
+      {/* Background Video - Fixed and Z-Indexed to back */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-black/60 z-10" />
-        <video autoPlay loop muted playsInline className="w-full h-full object-cover">
-          <source src="/videos/misty-forest.mp4" type="video/mp4" />
+        <video autoPlay loop muted playsInline className="w-full h-full object-cover opacity-60">
+          <source src="/videos/golden-bust.mp4" type="video/mp4" />
         </video>
       </div>
 
-      {/* Gold-Edged Identity Frame */}
-      <div className="relative z-20 p-12 rounded-[40px] text-center max-w-xl border border-white/10 bg-black/20 backdrop-blur-md">
-        <div className="w-20 h-20 rounded-full border border-yellow-500/50 flex items-center justify-center bg-black/40 mx-auto mb-8 shadow-[0_0_15px_rgba(234,179,8,0.2)]">
-          <span className="text-2xl font-serif text-yellow-500">[ I ]</span>
+      {/* TOP SAFE ZONE: Alphabet Icons (Penultimate Logic) */}
+      <div className="w-full flex justify-center pt-4">
+        <div className="bg-black/40 backdrop-blur-md rounded-2xl p-4 border border-white/10 flex flex-wrap gap-3">
+          {words.map((word, index) => {
+            const first = word[0]?.toUpperCase();
+            const penultimate = word.length > 1 ? word[word.length - 2].toUpperCase() : first;
+            return (
+              <div key={index} className="w-14 h-10 border border-yellow-500/30 rounded-md overflow-hidden flex">
+                 <img src={`/alphabet/${first}.jpg`} className="w-1/2 object-cover" alt={first} />
+                 <img src={`/alphabet/${penultimate}.jpg`} className="w-1/2 object-cover" alt={penultimate} />
+              </div>
+            );
+          })}
         </div>
-        
-        <h1 className="text-4xl tracking-[0.3em] uppercase text-white/90 mb-4 font-serif">
-          Harmonica
-        </h1>
-        <p className="text-white/40 text-sm tracking-widest italic mb-10">
-          The Art of Greeting
-        </p>
+      </div>
 
-        <a 
-          href="/open"
-          className="inline-block border border-yellow-500/50 px-8 py-3 bg-white/5 text-white/80 hover:text-white uppercase tracking-[0.2em] text-xs transition-all duration-700 hover:bg-yellow-500/10"
-        >
-          Enter the Sanctuary
-        </a>
+      {/* MIDDLE ZONE: LEFT COMPLETELY EMPTY FOR THE ARTISTIC SUBJECT */}
+      <div className="flex-grow" />
+
+      {/* BOTTOM SAFE ZONE: Title and Message */}
+      <div className="w-full text-center pb-10 space-y-4">
+        <h2 className="text-yellow-500/80 tracking-[0.6em] uppercase text-sm border-t border-white/10 pt-4 inline-block">
+          Oceanic Breath
+        </h2>
+        <p className="text-white font-serif italic text-2xl max-w-2xl mx-auto leading-relaxed px-6">
+          "{message}"
+        </p>
       </div>
     </main>
   );
