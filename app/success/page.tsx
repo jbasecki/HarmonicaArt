@@ -3,64 +3,46 @@
 import React from 'react';
 
 export default function SuccessPage() {
-  // Example message coming from your sending page
-  const message = "The misty forest sanctuary"; 
-  
-  // 1. Split the message into individual words
+  const message = "The oceanic breath of the sanctuary"; // Replace with dynamic data
   const words = message.split(" ");
 
   return (
-    <main className="relative min-h-screen w-full flex items-center justify-center p-6 overflow-hidden">
-      {/* Background Video remains the star */}
+    <main className="relative min-h-screen w-full flex flex-col justify-between p-10 overflow-hidden bg-black">
+      {/* Background Video */}
       <div className="absolute inset-0 -z-10">
-        <video autoPlay loop muted playsInline className="w-full h-full object-cover">
-          <source src="/videos/misty-forest.mp4" type="video/mp4" />
+        <video autoPlay loop muted playsInline className="w-full h-full object-cover opacity-60">
+          <source src="/videos/golden-bust.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-black/40" />
       </div>
 
-      <div className="sanctuary-glass w-full max-w-5xl rounded-[40px] p-12 text-center flex flex-col items-center gap-12">
-        
-        <header>
-          <h1 className="font-playfair text-3xl tracking-[0.4em] uppercase text-white/90">
-            Alphabet Sanctuary
-          </h1>
-          <p className="text-white/40 text-xs mt-4 tracking-widest italic">
-            First and Penultimate Logic Active
-          </p>
-        </header>
-
-        {/* 2. Visual Logic: Mapping words to unique icons */}
-        <div className="flex flex-wrap justify-center gap-6">
+      {/* TOP SAFE ZONE: The Alphabet Icons */}
+      <header className="sanctuary-glass rounded-3xl p-6 self-center w-full max-w-4xl mt-4">
+        <div className="flex flex-wrap justify-center gap-4">
           {words.map((word, index) => {
             const first = word[0]?.toUpperCase();
-            // Penultimate logic: if word is 1 char, use first. Otherwise, length - 2.
             const penultimate = word.length > 1 ? word[word.length - 2].toUpperCase() : first;
-
             return (
-              <div key={index} className="flex flex-col items-center gap-2">
-                {/* Visual Icon Pair */}
-                <div className="gold-edge w-24 h-16 rounded-xl bg-black/40 flex items-center justify-center gap-1 overflow-hidden">
-                   <img src={`/alphabet/${first}.jpg`} alt={first} className="h-full w-1/2 object-cover" />
-                   <img src={`/alphabet/${penultimate}.jpg`} alt={penultimate} className="h-full w-1/2 object-cover" />
-                </div>
-                {/* Word Label */}
-                <span className="text-[10px] text-gold-500 uppercase tracking-tighter font-bold">
-                  {word}
-                </span>
+              <div key={index} className="gold-edge w-16 h-12 rounded-lg bg-black/40 flex overflow-hidden">
+                 <img src={`/alphabet/${first}.jpg`} alt={first} className="w-1/2 object-cover border-r border-gold-500/20" />
+                 <img src={`/alphabet/${penultimate}.jpg`} alt={penultimate} className="w-1/2 object-cover" />
               </div>
             );
           })}
         </div>
+      </header>
 
-        {/* 3. The Full Quote Display */}
-        <div className="max-w-2xl border-t border-white/10 pt-8">
-           <p className="font-playfair text-2xl text-white leading-relaxed italic">
-             "{message}"
-           </p>
-        </div>
+      {/* MIDDLE ZONE: LEFT EMPTY FOR THE SUBJECT'S FACE */}
+      <div className="flex-grow" />
 
-      </div>
+      {/* BOTTOM SAFE ZONE: The Title and Quote */}
+      <footer className="w-full max-w-2xl self-center text-center space-y-4 mb-8">
+        <h2 className="font-playfair text-white tracking-[0.5em] uppercase text-xl border-b border-gold-500/30 pb-2">
+          Oceanic Breath
+        </h2>
+        <p className="font-playfair italic text-white/80 text-lg px-4">
+          "{message}"
+        </p>
+      </footer>
     </main>
   );
 }
