@@ -3,19 +3,18 @@
 import React from 'react';
 
 export default function SuccessPage() {
-  const message = "The oceanic breath of the sanctuary"; // Replace with dynamic data
+  const message = "The oceanic breath of the sanctuary"; 
   const words = message.split(" ");
 
   return (
     <main className="relative min-h-screen w-full flex flex-col justify-between p-10 overflow-hidden bg-black">
-      {/* Background Video */}
       <div className="absolute inset-0 -z-10">
         <video autoPlay loop muted playsInline className="w-full h-full object-cover opacity-60">
           <source src="/videos/golden-bust.mp4" type="video/mp4" />
         </video>
       </div>
 
-      {/* TOP SAFE ZONE: The Alphabet Icons */}
+      {/* TOP ZONE: Icons remain at the top edge */}
       <header className="sanctuary-glass rounded-3xl p-6 self-center w-full max-w-4xl mt-4">
         <div className="flex flex-wrap justify-center gap-4">
           {words.map((word, index) => {
@@ -31,10 +30,10 @@ export default function SuccessPage() {
         </div>
       </header>
 
-      {/* MIDDLE ZONE: LEFT EMPTY FOR THE SUBJECT'S FACE */}
+      {/* MIDDLE ZONE: Empty to keep the eyes/face clear */}
       <div className="flex-grow" />
 
-      {/* BOTTOM SAFE ZONE: The Title and Quote */}
+      {/* BOTTOM ZONE: Quote and Title pinned to the bottom edge */}
       <footer className="w-full max-w-2xl self-center text-center space-y-4 mb-8">
         <h2 className="font-playfair text-white tracking-[0.5em] uppercase text-xl border-b border-gold-500/30 pb-2">
           Oceanic Breath
