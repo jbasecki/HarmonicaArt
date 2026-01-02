@@ -1,1 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
+:root {
+  --gold-primary: #D4AF37;
+  --gold-glow: rgba(212, 175, 55, 0.4);
+}
+
+body {
+  background: black;
+  color: white;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+/* Custom Sanctuary Effects */
+@layer components {
+  .sanctuary-glass {
+    @apply bg-white/10 backdrop-blur-md border border-white/20 shadow-2xl;
+    /* This creates the frosted glass look that lets the video through */
+  }
+
+  .gold-edge {
+    border: 1px solid var(--gold-primary);
+    box-shadow: 0 0 15px var(--gold-glow);
+    transition: all 0.3s ease;
+  }
+
+  .gold-edge:focus-within {
+    box-shadow: 0 0 25px var(--gold-primary);
+    border-color: white;
+  }
+}
+
+/* Smooth Video Background */
+video {
+  filter: brightness(0.7) contrast(1.1);
+}
