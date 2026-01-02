@@ -1,33 +1,58 @@
-'use client';
-import React, { Suspense } from 'react';
-import { useSearchParams } from 'next/navigation';
+"use client";
 
-function OpenContent() {
-  const searchParams = useSearchParams();
-  const vibeId = searchParams.get('vibe') || '14'; 
-  const message = searchParams.get('msg') || '';
-  const tiles = searchParams.get('tiles') ? searchParams.get('tiles')!.split(',') : [];
-  const from = searchParams.get('from') || '';
-  const videoUrl = `https://storage.googleapis.com/simple-bucket-27/${vibeId}.mp4`;
+import React from 'react';
 
+export default function OpenPage() {
   return (
-    <main style={{ position: 'relative', width: '100vw', height: '100vh', overflow: 'hidden', background: '#000' }}>
-      <video key={vibeId} autoPlay loop muted playsInline style={{ position: 'absolute', width: '100%', height: '100%', objectFit: 'cover', opacity: 0.6 }}>
-        <source src={videoUrl} type="video/mp4" />
-      </video>
-      <div style={{ position: 'relative', zIndex: 10, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', color: 'white', textAlign: 'center', padding: '20px' }}>
-        <h1 style={{ fontSize: '2.5rem', marginBottom: '30px', fontWeight: '300' }}>{message}</h1>
-        <div style={{ display: 'flex', gap: '10px', marginBottom: '40px', flexWrap: 'wrap', justifyContent: 'center' }}>
-          {tiles.map((word, i) => (
-            <img key={i} src={`https://storage.googleapis.com/simple-bucket-27/${word[0].toUpperCase()}5.png`} style={{ width: '50px' }} alt="tile" />
-          ))}
+    <main className="relative min-h-screen w-full overflow-hidden flex items-center justify-center p-4">
+      {/* 1. Maximized Background Video Visibility */}
+      <div className="absolute inset-0 -z-10">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="object-cover w-full h-full opacity-80" // High opacity to keep video vibrant
+        >
+          <source src="/videos/misty-forest.mp4" type="video/mp4" />
+        </video>
+        {/* Subtle overlay to help text pop without hiding the video */}
+        <div className="absolute inset-0 bg-black/20" /> 
+      </div>
+
+      {/* 2. Glassmorphism Form Container */}
+      <div className="w-full max-w-xl p-8 rounded-3xl border border-white/20 bg-white/10 backdrop-blur-md shadow-2xl">
+        <h1 className="text-3xl font-light text-white mb-6 tracking-widest text-center uppercase">
+          A Harmonica for Thoughtful Words
+        </h1>
+
+        <div className="space-y-6">
+          {/* 3. Updated Placeholder Text */}
+          <textarea
+            placeholder="paste your favorite quote, a curious question, or write a personal message here..."
+            className="w-full h-48 p-4 bg-transparent border border-white/30 rounded-2xl text-white placeholder-white/60 focus:outline-none focus:border-gold-500 transition-all resize-none"
+          />
+
+          <div className="flex flex-col gap-4">
+            <input 
+              type="text" 
+              placeholder="Add a video link (optional)" 
+              className="w-full p-3 bg-white/5 border border-white/20 rounded-xl text-white placeholder-white/40 focus:outline-none"
+            />
+            
+            {/* 4. Mini-Payment Placeholder (Future Stripe Element) */}
+            <div className="p-4 rounded-xl border border-dashed border-white/30 bg-black/20 text-center">
+              <p className="text-white/50 text-sm italic">
+                Secure payment will appear here once the Stripe handshake completes.
+              </p>
+            </div>
+
+            <button className="w-full py-4 bg-white/20 hover:bg-white/30 border border-white/40 text-white rounded-full tracking-[0.2em] uppercase transition-all">
+              Produce & Open Harmonica
+            </button>
+          </div>
         </div>
-        <p style={{ color: 'gold', fontSize: '1.2rem', letterSpacing: '4px' }}>— {from}</p>
       </div>
     </main>
   );
-}
-
-export default function OpenPage() {
-  return <Suspense fallback={<div style={{background:'#000', height:'100vh'}}></div>}><OpenContent /></Suspense>;
 }
