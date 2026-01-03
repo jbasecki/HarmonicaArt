@@ -5,8 +5,10 @@ import React, { useState, Suspense } from 'react';
 function OpenContent() {
   const searchParams = useSearchParams();
   const [isRevealed, setIsRevealed] = useState(false);
+  
+  // Dynamic parameters captured from the unique link
   const vibeId = searchParams.get('vibe') || '14'; 
-  const tilesStr = searchParams.get('tiles') || 'Success,Sanctuary,Restored';
+  const tilesStr = searchParams.get('tiles') || 'Harmonica,Sanctuary,Art';
   const stashedWords = tilesStr.split(',');
   const senderSignature = searchParams.get('from') || 'A Friend';
 
@@ -15,26 +17,35 @@ function OpenContent() {
       <video autoPlay loop muted playsInline style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: -1, opacity: isRevealed ? 0.4 : 0.1 }}>
         <source src={`https://storage.googleapis.com/simple-bucket-27/${vibeId}.mp4`} type="video/mp4" />
       </video>
+      
       {!isRevealed ? (
-        <div onClick={() => setIsRevealed(true)} style={{ width: '120px', height: '120px', margin: '15% auto', borderRadius: '50%', background: 'radial-gradient(circle, #FFD700 0%, #B8860B 100%)', boxShadow: '0 0 50px gold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <p style={{ color: 'black', fontWeight: 'bold', letterSpacing: '2px' }}>UNFOLD</p>
+        <div style={{ marginTop: '15vh' }}>
+          <h2 style={{ color: 'gold', letterSpacing: '8px', fontSize: '1.2rem', marginBottom: '40px' }}>A GIFT HAS UNFOLDED</h2>
+          <div onClick={() => setIsRevealed(true)} style={{ width: '140px', height: '140px', margin: '0 auto', borderRadius: '50%', background: 'radial-gradient(circle, #FFD700 0%, #B8860B 100%)', boxShadow: '0 0 60px gold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <p style={{ color: 'black', fontWeight: 'bold', letterSpacing: '3px', fontSize: '0.9rem' }}>UNFOLD</p>
+          </div>
         </div>
       ) : (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '50px' }}>
-          <div style={{ display: 'flex', gap: '20px', marginBottom: '40px' }}>
+        <div className="sanctuary-glass" style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center', marginTop: '10vh', padding: '40px', borderRadius: '30px' }}>
+          <div style={{ display: 'flex', gap: '25px', marginBottom: '40px' }}>
             {stashedWords.map((word, i) => {
               // REFINED ALPHABET LOGIC: First and One-Before-The-Last
-              const first = word.trim()[0].toLowerCase();
-              const penult = word.trim().length > 1 ? word.trim()[word.trim().length - 2].toLowerCase() : first;
+              const wordClean = word.trim();
+              const first = wordClean[0].toLowerCase();
+              const penult = wordClean.length > 1 ? wordClean[wordClean.length - 2].toLowerCase() : first;
+              
               return (
-                <div key={i} style={{ display: 'flex', gap: '4px' }}>
-                  <div style={{ width: '45px', height: '70px', border: '1px solid gold', borderRadius: '8px', backgroundImage: `url(https://storage.googleapis.com/simple-bucket-27/vibes/${first}.png)`, backgroundSize: 'cover' }} />
-                  <div style={{ width: '45px', height: '70px', border: '1px solid gold', borderRadius: '8px', backgroundImage: `url(https://storage.googleapis.com/simple-bucket-27/vibes/${penult}.png)`, backgroundSize: 'cover' }} />
+                <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <div style={{ display: 'flex', gap: '4px' }}>
+                    <div style={{ width: '45px', height: '75px', border: '1px solid gold', borderRadius: '8px', backgroundImage: `url(https://storage.googleapis.com/simple-bucket-27/vibes/${first}.png)`, backgroundSize: 'cover' }} />
+                    <div style={{ width: '45px', height: '75px', border: '1px solid gold', borderRadius: '8px', backgroundImage: `url(https://storage.googleapis.com/simple-bucket-27/vibes/${penult}.png)`, backgroundSize: 'cover' }} />
+                  </div>
+                  <p style={{ color: 'gold', fontSize: '0.7rem', marginTop: '15px', letterSpacing: '3px', fontWeight: 'bold' }}>{wordClean.toUpperCase()}</p>
                 </div>
               );
             })}
           </div>
-          <p style={{ color: '#FFD700', fontSize: '2.5rem' }}>{senderSignature}</p>
+          <p style={{ color: '#FFD700', fontSize: '2.5rem', marginTop: '20px' }}>{senderSignature}</p>
         </div>
       )}
     </div>
@@ -42,5 +53,11 @@ function OpenContent() {
 }
 
 export default function ReceiverPage() {
-  return <main style={{ minHeight: '100vh', background: '#000' }}><Suspense fallback={<p>Opening Sanctuary...</p>}><OpenContent /></Suspense></main>;
+  return (
+    <main style={{ minHeight: '100vh', background: '#000', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <Suspense fallback={<p>Opening Sanctuary...</p>}>
+        <OpenContent />
+      </Suspense>
+    </main>
+  );
 }
