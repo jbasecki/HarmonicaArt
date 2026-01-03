@@ -6,7 +6,14 @@ export default function LandingPage() {
       {/* Background Video Layer */}
       <div className="absolute inset-0 -z-10">
         <video autoPlay loop muted playsInline className="w-full h-full object-cover opacity-50">
-          <source src="/videos/misty-forest.mp4" type="video/mp4" />
+          {/* POINT OF INSERTION: 
+              We are now using the absolute URL for your 'simple-bucket-27' 
+              instead of the local folder.
+          */}
+          <source 
+            src="https://storage.googleapis.com/simple-bucket-27/videos/misty-forest.mp4" 
+            type="video/mp4" 
+          />
         </video>
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black" />
       </div>
