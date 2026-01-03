@@ -5,14 +5,13 @@ import { useSearchParams } from 'next/navigation';
 function SuccessContent() {
   const searchParams = useSearchParams();
   const tiles = searchParams.get('tiles') || '';
-  const vibe = searchParams.get('client_reference_id') || '14';
   const from = searchParams.get('from') || 'Me';
 
   // The New Alphabet Rule: First and One-Before-Last
   const processWords = (text: string) => {
     return text.split(/[ ,]+/).filter(Boolean).map(word => {
       const first = word[0].toUpperCase();
-      // Logic for one-before-the-last
+      // Logic for one-before-the-last: skips the final letter
       const oneBeforeLast = word.length > 1 ? word[word.length - 2].toUpperCase() : first;
       return { first, oneBeforeLast, original: word };
     });
@@ -23,7 +22,7 @@ function SuccessContent() {
 
   return (
     <main style={{ minHeight: '100vh', background: '#000', color: 'gold', textAlign: 'center', padding: '40px' }}>
-      <p style={{ letterSpacing: '4px', fontSize: '0.7rem', marginBottom: '40px' }}>HARMONICA PREVIEW</p>
+      <p style={{ letterSpacing: '4px', fontSize: '0.7rem', marginBottom: '40px', opacity: 0.8 }}>HARMONICA PREVIEW</p>
       
       <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', flexWrap: 'wrap' }}>
         {wordsArray.map((w, i) => (
@@ -33,23 +32,23 @@ function SuccessContent() {
               <img src={`${bucketUrl}/${w.first}.png`} alt={w.first} style={{ width: '80px' }} />
               <img src={`${bucketUrl}/${w.oneBeforeLast}.png`} alt={w.oneBeforeLast} style={{ width: '80px' }} />
             </div>
-            <p style={{ fontSize: '0.6rem', marginTop: '10px' }}>{w.first}{w.oneBeforeLast}</p>
+            <p style={{ fontSize: '0.6rem', marginTop: '10px', letterSpacing: '2px' }}>{w.first}{w.oneBeforeLast}</p>
           </div>
         ))}
       </div>
 
       <div style={{ marginTop: '60px', opacity: 0.6 }}>
-        <p>signed,</p>
-        <p style={{ fontSize: '1.5rem' }}>{from}</p>
+        <p style={{ fontSize: '0.7rem', letterSpacing: '2px' }}>signed,</p>
+        <p style={{ fontSize: '1.5rem', fontFamily: 'serif' }}>{from}</p>
       </div>
     </main>
   );
 }
 
-// The Suspense wrapper required to fix the error in image_9428e8.png
+// Wrapping in Suspense to fix the Vercel Build Error
 export default function SuccessPage() {
   return (
-    <Suspense fallback={<div style={{ color: 'gold' }}>Loading Sanctuary...</div>}>
+    <Suspense fallback={<div style={{ color: 'gold', marginTop: '20vh' }}>LOADING SANCTUARY...</div>}>
       <SuccessContent />
     </Suspense>
   );
