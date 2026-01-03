@@ -1,18 +1,18 @@
 'use client';
-import React from 'react';
+import React, { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 
-export default function SuccessPage() {
+function SuccessContent() {
   const searchParams = useSearchParams();
   const tiles = searchParams.get('tiles') || '';
   const vibe = searchParams.get('client_reference_id') || '14';
   const from = searchParams.get('from') || 'Me';
 
-  // The Alphabet Rule: First and One-Before-Last
+  // The New Alphabet Rule: First and One-Before-Last
   const processWords = (text: string) => {
     return text.split(/[ ,]+/).filter(Boolean).map(word => {
       const first = word[0].toUpperCase();
-      // Logic for one-before-the-last, with a safety check for short words
+      // Logic for one-before-the-last
       const oneBeforeLast = word.length > 1 ? word[word.length - 2].toUpperCase() : first;
       return { first, oneBeforeLast, original: word };
     });
@@ -29,7 +29,7 @@ export default function SuccessPage() {
         {wordsArray.map((w, i) => (
           <div key={i} style={{ textAlign: 'center' }}>
             <div style={{ display: 'flex', border: '1px solid gold', borderRadius: '8px', overflow: 'hidden', boxShadow: '0 0 15px gold' }}>
-              {/* Asset Path Fix: Looking in the root for S.png, not /vibes/S.png */}
+              {/* Asset Path Fix: Looking in the root for alphabet PNGs */}
               <img src={`${bucketUrl}/${w.first}.png`} alt={w.first} style={{ width: '80px' }} />
               <img src={`${bucketUrl}/${w.oneBeforeLast}.png`} alt={w.oneBeforeLast} style={{ width: '80px' }} />
             </div>
@@ -43,5 +43,14 @@ export default function SuccessPage() {
         <p style={{ fontSize: '1.5rem' }}>{from}</p>
       </div>
     </main>
+  );
+}
+
+// The Suspense wrapper required to fix the error in image_9428e8.png
+export default function SuccessPage() {
+  return (
+    <Suspense fallback={<div style={{ color: 'gold' }}>Loading Sanctuary...</div>}>
+      <SuccessContent />
+    </Suspense>
   );
 }
