@@ -1,7 +1,7 @@
 import './globals.css';
 import type { Metadata } from 'next';
 
-// This is the metadata that was causing the error in page.tsx
+// This safely holds the "digital wrapping paper" for the warehouse
 export const metadata: Metadata = {
   title: 'Harmonica | A Sanctuary for Stashed Cognition',
   description: 'Compose, Stash, and Produce your unique interactive gift.',
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     description: 'A gift of stashed cognition is waiting for you.',
     images: [
       {
-        url: '/opengraph-image.jpg', // Points to the file in your repo
+        url: '/opengraph-image.jpg',
         width: 1200,
         height: 630,
         alt: 'Harmonica Gift Preview',
