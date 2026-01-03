@@ -6,8 +6,8 @@ function SuccessContent() {
   const searchParams = useSearchParams();
   const vibeId = searchParams.get('client_reference_id') || '14'; 
   
-  // Rebuilding the stashed logic: 1st and penultimate letters
-  const stashedWords = ["RESTORATION", "SUCCESS"]; 
+  // Example words to test the "First and Penultimate" logic
+  const stashedWords = ["SUCCESS", "SANCTUARY"]; 
 
   return (
     <main style={{ minHeight: '100vh', background: '#000', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
@@ -22,8 +22,9 @@ function SuccessContent() {
             const penult = word.length > 1 ? word[word.length - 2].toLowerCase() : first;
             return (
               <div key={i} style={{ display: 'flex', gap: '8px' }}>
-                <div style={{ width: '45px', height: '75px', border: '1px solid gold', borderRadius: '8px', backgroundImage: `url(https://storage.googleapis.com/simple-bucket-27/vibes/${first}.png)`, backgroundSize: 'cover' }} />
-                <div style={{ width: '45px', height: '75px', border: '1px solid gold', borderRadius: '8px', backgroundImage: `url(https://storage.googleapis.com/simple-bucket-27/vibes/${penult}.png)`, backgroundSize: 'cover' }} />
+                {/* CORRECTED PATH: No more "/vibes/" folder to trigger NoSuchKey */}
+                <div style={{ width: '45px', height: '75px', border: '1px solid gold', borderRadius: '8px', backgroundImage: `url(https://storage.googleapis.com/simple-bucket-27/${first}.png)`, backgroundSize: 'cover' }} />
+                <div style={{ width: '45px', height: '75px', border: '1px solid gold', borderRadius: '8px', backgroundImage: `url(https://storage.googleapis.com/simple-bucket-27/${penult}.png)`, backgroundSize: 'cover' }} />
               </div>
             );
           })}
@@ -34,5 +35,5 @@ function SuccessContent() {
 }
 
 export default function SuccessPage() {
-  return <Suspense fallback={<p>Clearing Cache...</p>}><SuccessContent /></Suspense>;
+  return <Suspense fallback={<p>Restoring Art...</p>}><SuccessContent /></Suspense>;
 }
