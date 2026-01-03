@@ -10,14 +10,14 @@ function SuccessContent() {
   const processWords = (text: string) => {
     return text.split(/[ ,]+/).filter(Boolean).map(word => {
       const first = word[0].toUpperCase();
-      // Logic for one-before-the-last (e.g., GOLD -> G, L)
+      // Verified Rule: First and One-Before-The-Last (e.g., GOING -> G, N)
       const oneBeforeLast = word.length > 1 ? word[word.length - 2].toUpperCase() : first;
       return { first, oneBeforeLast };
     });
   };
 
   const wordsArray = processWords(tiles);
-  // Verified Bucket URL from your previous logs
+  // This URL must point to your root bucket where S.png lives
   const bucketUrl = "https://storage.googleapis.com/simple-bucket-27";
 
   return (
@@ -27,12 +27,29 @@ function SuccessContent() {
       <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', flexWrap: 'wrap' }}>
         {wordsArray.map((w, i) => (
           <div key={i} style={{ textAlign: 'center' }}>
-            <div style={{ display: 'flex', border: '1px solid gold', borderRadius: '8px', overflow: 'hidden', boxShadow: '0 0 15px gold', background: '#111' }}>
-              {/* Asset Path Fix: Points to root of bucket */}
-              <img src={`${bucketUrl}/${w.first}.png`} alt={w.first} style={{ width: '100px', height: 'auto' }} />
-              <img src={`${bucketUrl}/${w.oneBeforeLast}.png`} alt={w.oneBeforeLast} style={{ width: '100px', height: 'auto' }} />
+            <div style={{ 
+              display: 'flex', 
+              border: '1px solid gold', 
+              borderRadius: '8px', 
+              overflow: 'hidden', 
+              boxShadow: '0 0 15px gold', 
+              background: '#111' 
+            }}>
+              {/* These images will appear once the build is green and paths are right */}
+              <img 
+                src={`${bucketUrl}/${w.first}.png`} 
+                alt={w.first} 
+                style={{ width: '100px', height: 'auto', display: 'block' }} 
+              />
+              <img 
+                src={`${bucketUrl}/${w.oneBeforeLast}.png`} 
+                alt={w.oneBeforeLast} 
+                style={{ width: '100px', height: 'auto', display: 'block' }} 
+              />
             </div>
-            <p style={{ fontSize: '0.8rem', marginTop: '10px', color: 'gold' }}>{w.first}{w.oneBeforeLast}</p>
+            <p style={{ fontSize: '0.8rem', marginTop: '10px', color: 'gold', letterSpacing: '2px' }}>
+              {w.first}{w.oneBeforeLast}
+            </p>
           </div>
         ))}
       </div>
@@ -45,7 +62,7 @@ function SuccessContent() {
   );
 }
 
-// Fixed: Wrapping in Suspense to satisfy Vercel Build Logs
+// Fixing the Vercel Build Error: useSearchParams() requires Suspense
 export default function SuccessPage() {
   return (
     <Suspense fallback={<div style={{ color: 'gold', marginTop: '20vh' }}>CONNECTING TO SANCTUARY...</div>}>
