@@ -1,14 +1,22 @@
-import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
-import "./globals.css";
+import './globals.css';
+import type { Metadata } from 'next';
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" });
-
+// This is the metadata that was causing the error in page.tsx
 export const metadata: Metadata = {
-  title: "Harmonica | The Art of Greeting",
-  description: "A sanctuary for thoughtful words and metaphors.",
-  metadataBase: new URL("https://harmonica-art.vercel.app"),
+  title: 'Harmonica | A Sanctuary for Stashed Cognition',
+  description: 'Compose, Stash, and Produce your unique interactive gift.',
+  openGraph: {
+    title: 'Harmonica',
+    description: 'A gift of stashed cognition is waiting for you.',
+    images: [
+      {
+        url: '/opengraph-image.jpg', // Points to the file in your repo
+        width: 1200,
+        height: 630,
+        alt: 'Harmonica Gift Preview',
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
@@ -18,7 +26,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${playfair.variable} font-sans bg-black text-white antialiased`}>
+      <body style={{ margin: 0, padding: 0, background: '#000' }}>
         {children}
       </body>
     </html>
