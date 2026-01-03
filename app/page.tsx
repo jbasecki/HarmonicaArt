@@ -1,67 +1,77 @@
 'use client';
 import React, { useState } from 'react';
 
-// This metadata helps the OpenGraph preview "form" when you share the link
-export const metadata = {
-  title: 'Harmonica | A Sanctuary for Stashed Cognition',
-  description: 'Compose, Stash, and Produce your unique interactive gift.',
-  openGraph: {
-    images: ['/opengraph-image.jpg'], // Points to the file in your repo
-  },
-};
+// VERIFIED IDs: MATCHING YOUR GOOGLE BUCKET FILENAMES (e.g., 1.mp4, 9.mp4)
+const vibes = [
+  { id: '14', name: 'Rainforest Sanctuary' },
+  { id: '19', name: 'The Golden Clearing' },
+  { id: '10', name: 'Misty Peak' },
+  { id: '9', name: 'Solar Bloom' },   
+  { id: '1', name: 'Midnight Stash' }, 
+  { id: '2', name: 'Ethereal Dawn' },
+  { id: '3', name: 'Golden Cognition' },
+  { id: '4', name: 'Velvet Silence' },
+  { id: '5', name: 'Amber Echo' },
+  { id: '6', name: 'Stardust Archive' },
+  { id: '7', name: 'Celestial Harmony' },
+  { id: '8', name: 'Lunar Drift' },
+  { id: '11', name: 'Winter Night' },
+  { id: '12', name: 'Oceanic Breath' },
+  { id: '13', name: 'Enchanted Gold' },
+  { id: '15', name: 'Crimson Glow' },
+  { id: '16', name: 'Twilight Ember' },
+  { id: '17', name: 'Serene Moss' },
+  { id: '18', name: 'Radiant Stillness' }
+];
 
-export default function MasterLandingPage() {
-  const [words, setWords] = useState('');
-  const [vibe, setVibe] = useState('14'); 
+export default function LandingPage() {
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-  const vibes = [
-    { id: '14', name: 'SNOW DAY', color: '#87CEEB' },
-    { id: '08', name: 'GOLDEN HOUR', color: '#FFD700' }
-  ];
+  const nextVibe = () => setCurrentIndex((prev) => (prev + 1) % vibes.length);
+  const prevVibe = () => setCurrentIndex((prev) => (prev - 1 + vibes.length) % vibes.length);
 
-  const handleStash = () => {
-    // Directs the user to the success page with chosen parameters
-    const query = `?client_reference_id=${vibe}&tiles=${encodeURIComponent(words)}&from=Me`;
-    window.location.href = `/success${query}`;
+  const handlePayAndEnter = () => {
+    // Branded Stripe Link
+    const stripeUrl = "https://buy.stripe.com/aFaaEYf5ybtzg3173ofnO08";
+    window.location.href = `${stripeUrl}?client_reference_id=${vibes[currentIndex].id}`;
   };
 
   return (
-    <main style={{ minHeight: '100vh', background: '#000', color: 'gold', fontFamily: 'serif', textAlign: 'center' }}>
-      {/* BRANDING SECTION */}
-      <div style={{ padding: '40px 20px', borderBottom: '1px solid #111' }}>
-        <p style={{ letterSpacing: '4px', fontSize: '0.7rem', marginBottom: '20px' }}>HOW TO GIFT A HARMONICA</p>
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '30px', fontSize: '0.6rem' }}>
-          <p>1. COMPOSE</p><p>2. STASH</p><p>3. PRODUCE</p><p>4. SHARE</p>
+    <main style={{ minHeight: '100vh', background: '#000', color: 'white', padding: '40px 20px' }}>
+      {/* GIFTING PROTOCOL */}
+      <section style={{ maxWidth: '900px', margin: '0 auto 60px', padding: '30px', borderBottom: '1px solid rgba(255,215,0,0.3)' }}>
+        <h2 style={{ color: 'gold', textAlign: 'center', letterSpacing: '6px', fontSize: '1.1rem', marginBottom: '25px' }}>HOW TO GIFT A HARMONICA</h2>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px', textAlign: 'center', fontSize: '0.8rem', color: '#bbb' }}>
+          <div><b style={{color:'gold'}}>1. COMPOSE</b><br/>Write in the sanctuary.</div>
+          <div><b style={{color:'gold'}}>2. STASH</b><br/>Touch words into gold.</div>
+          <div><b style={{color:'gold'}}>3. PRODUCE</b><br/>Seal your unique link.</div>
+          <div><b style={{color:'gold'}}>4. SHARE</b><br/>Send the unfolding light.</div>
         </div>
-      </div>
+      </section>
 
-      <div style={{ marginTop: '10vh', padding: '0 20px' }}>
-        <h1 style={{ fontSize: '2.5rem', letterSpacing: '10px' }}>HARMONICA</h1>
-        <p style={{ fontStyle: 'italic', opacity: 0.6 }}>A Sanctuary for Stashed Cognition</p>
+      {/* MAIN CONTENT */}
+      <div style={{ textAlign: 'center', maxWidth: '850px', margin: '0 auto' }}>
+        <h1 style={{ color: 'gold', fontSize: '2.5rem', letterSpacing: '12px', marginBottom: '10px' }}>HARMONICA</h1>
+        <p style={{ color: '#888', marginBottom: '40px', letterSpacing: '2px' }}>A Sanctuary for Stashed Cognition</p>
         
-        {/* VIBE SELECTOR */}
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '15px', marginTop: '40px' }}>
-          {vibes.map((v) => (
-            <button key={v.id} onClick={() => setVibe(v.id)} style={{ padding: '8px 15px', border: vibe === v.id ? '1px solid gold' : '1px solid #333', background: 'transparent', color: 'gold', cursor: 'pointer', fontSize: '0.6rem' }}>
-              {v.name}
-            </button>
-          ))}
+        {/* THE SLIDER */}
+        <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <button onClick={prevVibe} style={{ background: 'none', border: 'none', color: 'gold', fontSize: '4rem', cursor: 'pointer', padding: '20px' }}>‹</button>
+          
+          <div style={{ width: '100%', height: '500px', borderRadius: '50px', overflow: 'hidden', border: '2px solid gold', position: 'relative' }}>
+            <video key={vibes[currentIndex].id} autoPlay loop muted playsInline style={{ width: '100%', height: '100%', objectFit: 'cover' }}>
+              <source src={`https://storage.googleapis.com/simple-bucket-27/${vibes[currentIndex].id}.mp4`} type="video/mp4" />
+            </video>
+            <div style={{ position: 'absolute', bottom: '30px', width: '100%', textAlign: 'center' }}>
+              <p style={{ color: 'gold', letterSpacing: '5px', fontWeight: 'bold', textShadow: '2px 2px 8px black', fontSize: '1.2rem' }}>{vibes[currentIndex].name.toUpperCase()}</p>
+            </div>
+          </div>
+          
+          <button onClick={nextVibe} style={{ background: 'none', border: 'none', color: 'gold', fontSize: '4rem', cursor: 'pointer', padding: '20px' }}>›</button>
         </div>
 
-        {/* WRITING SPACE */}
-        <div style={{ marginTop: '40px', maxWidth: '400px', margin: '40px auto' }}>
-          <input 
-            type="text" 
-            placeholder="TYPE WORDS..." 
-            value={words}
-            onChange={(e) => setWords(e.target.value)}
-            style={{ background: 'transparent', border: 'none', borderBottom: '1px solid gold', color: 'white', padding: '10px', width: '100%', fontSize: '1.1rem', textAlign: 'center', outline: 'none', marginBottom: '40px' }}
-          />
-          
-          <button onClick={handleStash} style={{ padding: '15px 40px', border: '1px solid gold', background: 'gold', color: 'black', fontWeight: 'bold', cursor: 'pointer', letterSpacing: '2px' }}>
-            STASH COGNITION
-          </button>
-        </div>
+        {/* STRIPE BUTTON */}
+        <button onClick={handlePayAndEnter} style={{ marginTop: '50px', background: 'gold', color: 'black', padding: '18px 60px', borderRadius: '40px', fontWeight: 'bold', cursor: 'pointer', fontSize: '1.1rem', border: 'none' }}>CONFIRM SELECTION & ENTER</button>
       </div>
     </main>
   );
