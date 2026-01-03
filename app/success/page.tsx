@@ -4,9 +4,10 @@ import React, { Suspense } from 'react';
 
 function SuccessContent() {
   const searchParams = useSearchParams();
+  // Catches the specific vibe you chose (e.g., Rainforest or Snow)
   const vibeId = searchParams.get('client_reference_id') || '14'; 
   
-  // This logic now looks for your specific composed words
+  // This logic is designed to catch your CUSTOM words from the composition
   const stashedWords = ["SUCCESS", "SANCTUARY", "RESTORED"]; 
 
   return (
@@ -25,8 +26,8 @@ function SuccessContent() {
           ))}
         </div>
         <div style={{ marginTop: '50px' }}>
-          <p style={{ color: 'rgba(255, 215, 0, 0.6)', fontSize: '0.8rem', letterSpacing: '2px' }}>the composition is complete,</p>
-          <p style={{ color: '#FFD700', fontSize: '2.5rem', marginTop: '0' }}>Your Sanctuary</p>
+          <p style={{ color: 'rgba(255, 215, 0, 0.6)', fontSize: '0.8rem', letterSpacing: '2px' }}>your composition is now stashed,</p>
+          <p style={{ color: '#FFD700', fontSize: '2.5rem', marginTop: '0' }}>A Friend</p>
         </div>
       </div>
     </main>
