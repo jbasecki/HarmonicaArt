@@ -6,8 +6,8 @@ function SuccessContent() {
   const searchParams = useSearchParams();
   const vibeId = searchParams.get('client_reference_id') || '14'; 
   
-  // This simulates the words "SUCCESS SANCTUARY" using your new logic
-  const stashedWords = ["SUCCESS", "SANCTUARY"]; 
+  // Rebuilding the stashed logic: 1st and penultimate letters
+  const stashedWords = ["RESTORATION", "SUCCESS"]; 
 
   return (
     <main style={{ minHeight: '100vh', background: '#000', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
@@ -15,15 +15,15 @@ function SuccessContent() {
         <source src={`https://storage.googleapis.com/simple-bucket-27/${vibeId}.mp4`} type="video/mp4" />
       </video>
       <div style={{ textAlign: 'center', zIndex: 1 }}>
-        <p style={{ color: 'gold', letterSpacing: '4px', marginBottom: '25px', fontWeight: 'bold' }}>COMPOSED OF MEANINGFUL WORDS</p>
+        <p style={{ color: 'gold', letterSpacing: '4px', marginBottom: '30px', fontWeight: 'bold' }}>THE PARASITE IS GONE</p>
         <div style={{ display: 'flex', justifyContent: 'center', gap: '20px' }}>
           {stashedWords.map((word, i) => {
             const first = word[0].toLowerCase();
             const penult = word.length > 1 ? word[word.length - 2].toLowerCase() : first;
             return (
-              <div key={i} style={{ display: 'flex', gap: '5px' }}>
-                <div style={{ width: '50px', height: '80px', border: '1px solid gold', backgroundImage: `url(https://storage.googleapis.com/simple-bucket-27/vibes/${first}.png)`, backgroundSize: 'cover' }} />
-                <div style={{ width: '50px', height: '80px', border: '1px solid gold', backgroundImage: `url(https://storage.googleapis.com/simple-bucket-27/vibes/${penult}.png)`, backgroundSize: 'cover' }} />
+              <div key={i} style={{ display: 'flex', gap: '8px' }}>
+                <div style={{ width: '45px', height: '75px', border: '1px solid gold', borderRadius: '8px', backgroundImage: `url(https://storage.googleapis.com/simple-bucket-27/vibes/${first}.png)`, backgroundSize: 'cover' }} />
+                <div style={{ width: '45px', height: '75px', border: '1px solid gold', borderRadius: '8px', backgroundImage: `url(https://storage.googleapis.com/simple-bucket-27/vibes/${penult}.png)`, backgroundSize: 'cover' }} />
               </div>
             );
           })}
@@ -34,5 +34,5 @@ function SuccessContent() {
 }
 
 export default function SuccessPage() {
-  return <Suspense fallback={<p>Loading...</p>}><SuccessContent /></Suspense>;
+  return <Suspense fallback={<p>Clearing Cache...</p>}><SuccessContent /></Suspense>;
 }
