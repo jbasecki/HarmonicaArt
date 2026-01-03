@@ -6,7 +6,7 @@ function SuccessContent() {
   const searchParams = useSearchParams();
   const vibeId = searchParams.get('client_reference_id') || '14'; 
   
-  // Example words to test the "First and Penultimate" logic
+  // The interactive logic for your chosen words
   const stashedWords = ["SUCCESS", "SANCTUARY"]; 
 
   return (
@@ -22,7 +22,7 @@ function SuccessContent() {
             const penult = word.length > 1 ? word[word.length - 2].toLowerCase() : first;
             return (
               <div key={i} style={{ display: 'flex', gap: '8px' }}>
-                {/* CORRECTED PATH: No more "/vibes/" folder to trigger NoSuchKey */}
+                {/* REMOVED /vibes/ to match your bucket structure */}
                 <div style={{ width: '45px', height: '75px', border: '1px solid gold', borderRadius: '8px', backgroundImage: `url(https://storage.googleapis.com/simple-bucket-27/${first}.png)`, backgroundSize: 'cover' }} />
                 <div style={{ width: '45px', height: '75px', border: '1px solid gold', borderRadius: '8px', backgroundImage: `url(https://storage.googleapis.com/simple-bucket-27/${penult}.png)`, backgroundSize: 'cover' }} />
               </div>
