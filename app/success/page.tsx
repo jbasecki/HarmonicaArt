@@ -1,48 +1,102 @@
-"use client";
+'use client';
+import React, { useState, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 
-import React from 'react';
+function SenderContent() {
+  const searchParams = useSearchParams();
+  const vibeId = searchParams.get('vibe') || '14'; 
+  const [message, setMessage] = useState("");
+  const [stashedWords, setStashedWords] = useState<string[]>([]);
+  const [name, setName] = useState("");
 
-export default function SuccessPage() {
-  const message = "The oceanic breath of the sanctuary"; 
-  const words = message.split(" ");
+  const getLetterUrl = (l: string) => `https://storage.googleapis.com/simple-bucket-27/${l.toUpperCase()}5.png`;
+
+  const toggleWord = (word: string) => {
+    const clean = word.trim().replace(/[.,!?;:]/g, "");
+    if (!clean) return;
+    setStashedWords(prev => 
+      prev.includes(clean) ? prev.filter(w => w !== clean) : [...prev, clean]
+    );
+  };
+
+  const handleStashAndCopy = () => {
+    const baseUrl = window.location.origin;
+    const link = `${baseUrl}/open?vibe=${vibeId}&msg=${encodeURIComponent(message)}&tiles=${stashedWords.join(',')}&from=${encodeURIComponent(name)}`;
+    navigator.clipboard.writeText(link);
+    window.open(link, '_blank');
+  };
 
   return (
-    <main className="relative min-h-screen w-full flex flex-col justify-between p-10 bg-black overflow-hidden">
-      {/* Background Video - Fixed and Z-Indexed to back */}
-      <div className="absolute inset-0 -z-10">
-        <video autoPlay loop muted playsInline className="w-full h-full object-cover opacity-60">
-          <source src="/videos/golden-bust.mp4" type="video/mp4" />
-        </video>
-      </div>
-
-      {/* TOP SAFE ZONE: Alphabet Icons (Penultimate Logic) */}
-      <div className="w-full flex justify-center pt-4">
-        <div className="bg-black/40 backdrop-blur-md rounded-2xl p-4 border border-white/10 flex flex-wrap gap-3">
-          {words.map((word, index) => {
-            const first = word[0]?.toUpperCase();
-            const penultimate = word.length > 1 ? word[word.length - 2].toUpperCase() : first;
-            return (
-              <div key={index} className="w-14 h-10 border border-yellow-500/30 rounded-md overflow-hidden flex">
-                 <img src={`/alphabet/${first}.jpg`} className="w-1/2 object-cover" alt={first} />
-                 <img src={`/alphabet/${penultimate}.jpg`} className="w-1/2 object-cover" alt={penultimate} />
+    <main style={{ minHeight: '100vh', background: '#000', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '40px 20px' }}>
+      
+      {/* HARMONICA PREVIEW (The high-end top line) */}
+      <div style={{ width: '100%', maxWidth: '900px', textAlign: 'center', marginBottom: '50px' }}>
+        <p style={{ color: 'gold', fontSize: '0.7rem', letterSpacing: '4px', marginBottom: '30px', opacity: 0.6 }}>HARMONICA PREVIEW</p>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', minHeight: '120px', flexWrap: 'nowrap', overflowX: 'auto' }}>
+          {stashedWords.map((word, i) => (
+            <div key={i} style={{ flex: '0 0 auto', textAlign: 'center' }}>
+              <div style={{ display: 'flex', gap: '3px', border: '1.5px solid gold', padding: '8px', borderRadius: '12px', background: 'rgba(255,215,0,0.1)', boxShadow: '0 0 20px gold' }}>
+                <img src={getLetterUrl(word[0])} style={{ width: '50px' }} alt="vibe-start" />
+                <img src={getLetterUrl(word[word.length-1])} style={{ width: '50px' }} alt="vibe-end" />
               </div>
-            );
-          })}
+              <p style={{ color: 'gold', fontSize: '0.7rem', marginTop: '10px', fontWeight: 'bold' }}>{word.toUpperCase()}</p>
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* MIDDLE ZONE: LEFT COMPLETELY EMPTY FOR THE ARTISTIC SUBJECT */}
-      <div className="flex-grow" />
+      <div style={{ width: '100%', maxWidth: '650px', background: 'rgba(30,0,0,0.4)', padding: '35px', borderRadius: '35px', border: '1px solid gold', position: 'relative' }}>
+        
+        {/* SUBTLE INTERACTIVE TOKENS */}
+        <div style={{ marginBottom: '25px', display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+          {message.split(/\s+/).map((word, i) => {
+            const clean = word.replace(/[.,!?;:]/g, "");
+            const isSelected = stashedWords.includes(clean);
+            if (!clean) return null;
+            return (
+              <span key={i} onClick={() => toggleWord(word)} style={{ 
+                cursor: 'pointer', padding: '6px 12px', borderRadius: '10px', 
+                background: isSelected ? 'gold' : 'rgba(255,255,255,0.05)', 
+                color: isSelected ? 'black' : 'rgba(255,255,255,0.6)',
+                fontSize: '0.9rem', transition: '0.3s'
+              }}>{word}</span>
+            );
+          })}
+        </div>
 
-      {/* BOTTOM SAFE ZONE: Title and Message */}
-      <div className="w-full text-center pb-10 space-y-4">
-        <h2 className="text-yellow-500/80 tracking-[0.6em] uppercase text-sm border-t border-white/10 pt-4 inline-block">
-          Oceanic Breath
-        </h2>
-        <p className="text-white font-serif italic text-2xl max-w-2xl mx-auto leading-relaxed px-6">
-          "{message}"
-        </p>
+        <textarea 
+          placeholder="Compose your message..."
+          value={message} onChange={(e) => setMessage(e.target.value)}
+          style={{ width: '100%', height: '140px', background: 'transparent', border: 'none', color: 'white', fontSize: '1.2rem', outline: 'none', resize: 'none' }}
+        />
+
+        {/* THE SUBTLE GRAY REMINDER: Only shows if text exists but nothing is stashed */}
+        {message.length > 5 && stashedWords.length === 0 && (
+          <p style={{ color: '#888', fontSize: '0.75rem', position: 'absolute', bottom: '90px', left: '35px', fontStyle: 'italic', animation: 'fadeIn 2s' }}>
+            Tip: Tap your words above to stash them into the golden reveal...
+          </p>
+        )}
+
+        {/* HOVER INFO ICON */}
+        <div 
+          title="Words of meditative meaning are formed by association with visual abstracts rather than specific symbols seen in text."
+          style={{ position: 'absolute', bottom: '75px', right: '25px', color: '#888', border: '1px solid #555', borderRadius: '4px', padding: '1px 5px', fontSize: '0.65rem', cursor: 'help' }}
+        >
+          [i]
+        </div>
+
+        <input placeholder="Signature" value={name} onChange={(e) => setName(e.target.value)} style={{ width: '100%', background: 'transparent', borderTop: '1px solid #333', borderBottom: 'none', borderLeft: 'none', borderRight: 'none', padding: '15px 0', color: 'gold', textAlign: 'center', outline: 'none' }} />
       </div>
+
+      <button onClick={handleStashAndCopy} style={{ marginTop: '50px', background: 'linear-gradient(135deg, gold 0%, #B8860B 100%)', color: 'black', padding: '18px 60px', borderRadius: '45px', fontWeight: 'bold', border: 'none', cursor: 'pointer', fontSize: '1.1rem', boxShadow: '0 10px 30px rgba(0,0,0,0.5)' }}>
+        PRODUCE & OPEN HARMONICA
+      </button>
+
+      <style jsx>{` @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } } `}</style>
     </main>
   );
+}
+
+export default function SuccessPage() {
+  return <Suspense fallback={<div style={{color: 'gold', background: '#000', height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>PREPARING...</div>}><SenderContent /></Suspense>;
 }
