@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 
 export default function LandingPage() {
   const [words, setWords] = useState('');
-  const vibe = '14'; // Default to your verified Rainforest Sanctuary
+  const vibe = '14'; // Your verified Rainforest Sanctuary ID
 
   const handleStash = () => {
     if (!words.trim()) return;
@@ -16,7 +16,8 @@ export default function LandingPage() {
         <source src={`https://storage.googleapis.com/simple-bucket-27/${vibe}.mp4`} type="video/mp4" />
       </video>
       <div style={{ zIndex: 1 }}>
-        <h1 style={{ fontSize: '3.5rem', letterSpacing: '18px', fontWeight: 'normal' }}>HARMONICA</h1>
+        <h1 style={{ fontSize: '3.5rem', letterSpacing: '18px', fontWeight: 'normal', color: 'gold' }}>HARMONICA</h1>
+        <p style={{ fontStyle: 'italic', opacity: 0.6, letterSpacing: '3px' }}>A Sanctuary for Stashed Cognition</p>
         <input type="text" placeholder="ENTER YOUR WORDS..." value={words} onChange={(e) => setWords(e.target.value)}
           style={{ background: 'transparent', border: 'none', borderBottom: '1px solid gold', color: 'white', padding: '15px', width: '300px', textAlign: 'center', outline: 'none', marginTop: '40px' }} 
         />
